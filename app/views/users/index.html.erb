@@ -1,0 +1,90 @@
+<!-- <h1>Users#index</h1>
+<p>Find me in app/views/users/index.html.erb</p> -->
+
+<div class="container mt-5">
+	<h1>Welcome!</h1>
+	<% if flash[:success_logout] %>
+		<p class="text-success"><%= flash[:success_logout] %></p>
+	<% end %>
+
+	<div class="row">
+		<div class="col p-3">
+			<h4>Register</h4>
+			<% if flash[:errors_reg] %>
+				<% flash[:errors_reg].each do |err| %>
+					<p class="text-danger"><%= err %></p>
+				<% end %>
+			<% end %>
+
+			<form action="/users" method="post" class="mt-3">
+				<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+				<div class="form-group row">
+					<label for="inputFname" class="col-sm-3 col-form-label">First Name:</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="inputFname" name="user[first_name]">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputLname" class="col-sm-3 col-form-label">Last Name:</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="inputLname" name="user[last_name]">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputEmail" class="col-sm-3 col-form-label">Email:</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="inputEmail" name="user[email]">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputLocation" class="col-sm-3 col-form-label">Location:</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" id="inputLocation" name="user[location]">
+					</div>
+					<div class="col-sm-3">
+						<%= select_tag "user[state]", options_for_select(us_states), class: "form-control" %>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputPassword" class="col-sm-3 col-form-label">Password:</label>
+					<div class="col-sm-9">
+						<input type="password" class="form-control" id="inputPassword" name="user[password]">
+						<small class="form-text text-muted">*Password should be at least 8 characters</small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputConfirmPW" class="col-sm-3 col-form-label">Confirm PW:</label>
+					<div class="col-sm-9">
+						<input type="password" class="form-control" id="inputConfirmPW" name="user[password_confirmation]">
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary float-right">Register</button>
+			</form>
+		</div>
+		<div class="col">
+			<h4>Login</h4>
+			<% if flash[:errors_login] %>
+				<p class="text-danger"><%= flash[:errors_login] %></p>
+			<% end %>
+
+			<form action="/login" method="post">
+				<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+				<div class="form-group row">
+					<label for="inputEmailLogin" class="col-sm-3 col-form-label">Email:</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="inputEmailLogin" name="login_email">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputPasswordLogin" class="col-sm-3 col-form-label">Password:</label>
+					<div class="col-sm-9">
+						<input type="password" class="form-control" id="inputPasswordLogin" name="login_password">
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary float-right">Login</button>
+			</form>
+		</div>
+	</div>
+</div>

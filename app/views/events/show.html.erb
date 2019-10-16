@@ -1,0 +1,60 @@
+<!-- <h1>Events#show</h1>
+<p>Find me in app/views/events/show.html.erb</p> -->
+
+<a href="/events" class="btn btn-outline-primary float-right mr-3">Events Dashboard</a>
+
+<div class="container mt-5">
+	<h3><%= @event.name %></h3>
+	<br><br>
+
+	<div class="row">
+		<div class="col-md-8">
+			<p>Host: <%= @event.user.first_name %> <%= @event.user.last_name %></p>
+			<p>Date: <%= @event.date.strftime("%B %e, %Y") %></p>
+			<p>Location: <%= @event.location %>, <%= @event.state %></p>
+			<p>People who are joining the event: <%= @event.joins.count %></p>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th scope="col">Name</th>
+						<th scope="col">Location</th>
+						<th scope="col">State</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @joinees.each do |j| %>
+					<tr>
+						<td><%= j.user.first_name %> <%= j.user.last_name %></td>
+						<td><%= j.user.location %></td>
+						<td><%= j.user.state %></td>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-md-4">
+			<h5>Discussion about this event:</h5>
+			<div class="overflow-auto border border-dark rounded p-2" style="min-height: 400px;">
+				<% @comments.each do |c| %>
+					<p><%= c.user.first_name %> says: <%= c.comment %></p>
+					<hr>
+				<% end %>
+			</div>
+			<br><br>
+
+			<h6>Add Comment:</h6>
+			<% if flash[:errors] %>
+				<% flash[:errors].each do |err| %>
+					<p class="text-danger"><%= err %></p>
+				<% end %>
+			<% end %>
+			<form action="/comments" method="post">
+				<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+				<input type="hidden" name="event_id" value="<%= @event.id %>">
+				<textarea class="form-control" rows="2" name="comment"></textarea>
+				<button type="submit" class="btn btn-primary float-right">Submit Comments</button>
+			</form>
+		</div>
+	</div>
+
+</div>

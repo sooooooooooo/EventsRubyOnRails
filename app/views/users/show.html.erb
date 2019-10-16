@@ -1,0 +1,47 @@
+<a href="/events" class="btn btn-outline-primary float-right mr-3">Events Dashboard</a>
+
+<div class="container mt-5">
+	<h3>Edit Your Profile</h3>
+	<br><br>
+
+	<div class="col-sm-6">
+		<% if flash[:errors] %>
+			<% flash[:errors].each do |err| %>
+				<p class="text-danger"><%= err %></p>
+			<% end %>
+		<% end %>
+
+		<form action="/users/<%= session[:user_id] %>" method="post">
+			<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+			<input type="hidden" name="_method" value="put">
+			<div class="form-group row">
+				<label for="inputFname" class="col-sm-3 col-form-label">First Name:</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="inputFname" name="user[first_name]" value="<%= current_user.first_name %>">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="inputLname" class="col-sm-3 col-form-label">Last Name:</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="inputLname" name="user[last_name]" value="<%= current_user.last_name %>">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="inputEmail" class="col-sm-3 col-form-label">Email:</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="inputEmail" name="user[email]" value="<%= current_user.email %>">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="inputLocation" class="col-sm-3 col-form-label">Location:</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" id="inputLocation" name="user[location]" value="<%= current_user.location %>">
+				</div>
+				<div class="col-sm-3">
+					<%= select_tag "user[state]", options_for_select(us_states, current_user.state), class: "form-control" %>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary float-right">Update Records</button>
+		</form>
+	</div>
+</div>
